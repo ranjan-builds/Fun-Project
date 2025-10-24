@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeStates By Ranjan</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200..800&family=Hind:wght@300;400;500;600;700&family=Playwrite+AR:wght@100..400&display=swap" rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#00ac7c',
+                        secondary: '#f0fffb',
+                    },
+                    fontFamily: {
+                        'sans': ['Assistant', 'Arial', 'Helvetica', 'sans-serif'],
+                        'hind': ['Hind', 'sans-serif'],
+                        'playwrite': ['Playwrite AR', 'cursive'],
+                    },
+                    animation: {
+                        'orbit': 'orbit 25s linear infinite',
+                        'moving': 'moving 1s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        orbit: {
+                            '0%': { transform: 'translateX(-50%) rotate(0deg)' },
+                            '100%': { transform: 'translateX(-50%) rotate(360deg)' },
+                        },
+                        moving: {
+                            '50%': { width: '100%' },
+                            '100%': { width: '0', right: '0', left: 'unset' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/css">
+        body {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='30' viewBox='0 0 1000 120'%3E%3Cg fill='none' stroke='%23FFE3E3' stroke-width='0.9' %3E%3Cpath d='M-500 75c0 0 125-30 250-30S0 75 0 75s125 30 250 30s250-30 250-30s125-30 250-30s250 30 250 30s125 30 250 30s250-30 250-30'/%3E%3Cpath d='M-500 45c0 0 125-30 250-30S0 45 0 45s125 30 250 30s250-30 250-30s125-30 250-30s250 30 250 30s125 30 250 30s250-30 250-30'/%3E%3Cpath d='M-500 105c0 0 125-30 250-30S0 105 0 105s125 30 250 30s250-30 250-30s125-30 250-30s250 30 250 30s125 30 250 30s250-30 250-30'/%3E%3Cpath d='M-500 15c0 0 125-30 250-30S0 15 0 15s125 30 250 30s250-30 250-30s125-30 250-30s250 30 250 30s125 30 250 30s250-30 250-30'/%3E%3Cpath d='M-500-15c0 0 125-30 250-30S0-15 0-15s125 30 250 30s250-30 250-30s125-30 250-30s250 30 250 30s125 30 250 30s250-30 250-30'/%3E%3Cpath d='M-500 135c0 0 125-30 250-30S0 135 0 135s125 30 250 30s250-30 250-30s125-30 250-30s250 30 250 30s125 30 250 30s250-30 250-30'/%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        .dark body {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='30' viewBox='0 0 1000 120'%3E%3Cg fill='none' stroke='%23333' stroke-width='0.9' %3E%3Cpath d='M-500 75c0 0 125-30 250-30S0 75 0 75s125 30 250 30s250-30 250-30s125-30 250-30s250 30 250 30s125 30 250 30s250-30 250-30'/%3E%3Cpath d='M-500 45c0 0 125-30 250-30S0 45 0 45s125 30 250 30s250-30 250-30s125-30 250-30s250 30 250 30s125 30 250 30s250-30 250-30'/%3E%3Cpath d='M-500 105c0 0 125-30 250-30S0 105 0 105s125 30 250 30s250-30 250-30s125-30 250-30s250 30 250 30s125 30 250 30s250-30 250-30'/%3E%3Cpath d='M-500 15c0 0 125-30 250-30S0 15 0 15s125 30 250 30s250-30 250-30s125-30 250-30s250 30 250 30s125 30 250 30s250-30 250-30'/%3E%3Cpath d='M-500-15c0 0 125-30 250-30S0-15 0-15s125 30 250 30s250-30 250-30s125-30 250-30s250 30 250 30s125 30 250 30s250-30 250-30'/%3E%3Cpath d='M-500 135c0 0 125-30 250-30S0 135 0 135s125 30 250 30s250-30 250-30s125-30 250-30s250 30 250 30s125 30 250 30s250-30 250-30'/%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        .border-image {
+            border-image: url(images/border.svg);
+            border-image-slice: 20%;
+            border-image-repeat: round;
+            border-image-width: 50px;
+        }
+        
+        @media (max-width: 490px) {
+            .border-image {
+                display: none;
+            }
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #00ac7c;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        
+        .dark ::-webkit-scrollbar-track {
+            background: #333;
+        }
+        
+        .dark ::-webkit-scrollbar-thumb {
+            background: #00ac7c;
+        }
+        
+        .dark ::-webkit-scrollbar-thumb:hover {
+            background: #00d99a;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col items-center justify-center relative overflow-x-hidden font-sans font-medium text-lg tracking-wider transition-colors duration-300 bg-white dark:bg-gray-900">
+    <!-- Loading Screen -->
+    <div id="loaderContainer" class="fixed inset-0 w-full h-full bg-white dark:bg-gray-900 z-50 flex items-center justify-center">
+        <div class="loader h-1 w-32 bg-gray-200 dark:bg-gray-700 rounded-full relative">
+            <div class="absolute top-0 left-0 h-full bg-primary rounded-full animate-moving"></div>
+        </div>
+    </div>
+
+    <!-- Border -->
+    <div class="border-image absolute inset-0 border-2 border-transparent z-0 pointer-events-none"></div>
+
+    <!-- Header -->
+    <header class="absolute top-0 left-0 w-full p-5">
+        <div class="flex justify-between items-center">
+            <p class="font-playwrite text-xl md:text-2xl">Ranjan.Fun</p>
+            <!-- Dark Mode Toggle -->
+            <button id="themeToggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 transition-colors">
+                <svg id="sunIcon" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                </svg>
+                <svg id="moonIcon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Input Form -->
+    <div id="box" class="container w-4/5 max-w-md p-8 flex flex-col items-center justify-center gap-4">
+        <form class="w-full flex flex-col items-center justify-center gap-4">
+            <div class="avtar">
+                <iframe height="200" src="https://lottie.host/embed/1c4e541c-40c3-4749-8e28-e686c4e7db4b/CfTAdNxGgU.json"></iframe>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Birth Date</h2>
+            <div class="inputs grid grid-cols-3 gap-3 w-full">
+                <input id="dayinput" type="number" placeholder="Day" required 
+                    class="w-full h-12 text-center border border-gray-300 dark:border-gray-600 rounded-md text-xl focus:border-primary focus:ring-1 focus:ring-primary dark:bg-gray-800 dark:text-white" />
+                <input id="monthinput" type="number" placeholder="Month" required 
+                    class="w-full h-12 text-center border border-gray-300 dark:border-gray-600 rounded-md text-xl focus:border-primary focus:ring-1 focus:ring-primary dark:bg-gray-800 dark:text-white" />
+                <input id="yearinput" type="number" placeholder="Year" required 
+                    class="w-full h-12 text-center border border-gray-300 dark:border-gray-600 rounded-md text-xl focus:border-primary focus:ring-1 focus:ring-primary dark:bg-gray-800 dark:text-white" />
+            </div>
+            <button id="submitBtn" type="button" onclick="go()" disabled 
+                class="w-full py-4 text-xl md:text-2xl bg-primary text-secondary rounded-md font-bold transition-opacity disabled:opacity-70">
+                GO <span id="go">>>></span>
+            </button>
+        </form>
+    </div>
+
+    <!-- Life States Display -->
+    <div id="states" class="wrapper w-full min-h-screen hidden flex-col items-center dark:bg-gray-900">
+        <div class="graphic fixed top-0 w-full h-1/2 grid place-items-center bg-white dark:bg-gray-900 z-10">
+            <!-- Calendar -->
+            <div id="img1" class="calender image hidden border-4 border-primary text-center flex flex-col justify-between overflow-hidden text-2xl md:text-3xl rounded-md">
+                <p data-day class="py-2 px-6 bg-primary text-secondary"></p>
+                <h1 data-date class="mt-3"></h1>
+                <p data-style class="p-3 text-sm md:text-base"><span data-mn></span> <span data-year></span></p>
+            </div>
+
+            <!-- Lottie Animations -->
+            <iframe id="img2" class="image hidden" src="https://lottie.host/embed/4f695942-7ad8-4936-9091-06c528857329/tDiGMjEjVL.json"></iframe>
+            <iframe id="img3" class="image hidden" src="https://lottie.host/embed/ebd93ecc-b8f7-45a1-bd26-d2fb07ba2bec/khcTbBze50.json"></iframe>
+            <iframe id="img4" class="image hidden" src="https://lottie.host/embed/0172b8b9-be40-415d-8ccd-caeedf2ee475/bjZumQDzql.json"></iframe>
+            <iframe id="img5" class="image hidden" src="https://lottie.host/embed/dc6cfe0f-9117-4ad3-a5fa-dcaa586f67b3/MbLnSjZ9sd.json"></iframe>
+            <iframe id="img6" class="image hidden" src="https://lottie.host/embed/1484cce5-a339-4b73-b870-0458c5ccd220/tznK4V2xgF.json"></iframe>
+            <iframe id="img7" class="image hidden" src="https://lottie.host/embed/a605c33e-bd81-4356-aa79-d92220704404/sYISfukIsb.json"></iframe>
+            <iframe id="img8" class="image hidden" src="https://lottie.host/embed/9f916551-fe80-4f15-a071-3d08cd57149e/rvLUSHy1Qk.json"></iframe>
+            <iframe id="img9" class="image hidden" src="https://lottie.host/embed/3d9f9f5a-a558-41fd-a0a1-29bedd955cfa/yaLszjZMk3.json"></iframe>
+            <iframe id="img10" class="image hidden" src="https://lottie.host/embed/0a47e51f-1819-4f6d-b828-ff4870ca03bc/DtRJPpV0vF.json"></iframe>
+            <iframe id="img11" class="image hidden" src="https://lottie.host/embed/bd763756-4649-4d9a-8df9-cfda7dc132fe/DdXhPEUZVo.json"></iframe>
+            <iframe id="img12" class="image hidden" src="https://lottie.host/embed/2abd6b6a-8603-4bd0-964c-ac55f62a6c15/8D0K1ExIB9.json"></iframe>
+            
+            <!-- Solar System -->
+            <div id="img13" class="image suncontainer hidden w-full h-full bg-black">
+                <div class="suntravel relative rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48">
+                    <img id="sunmid" src="https://neal.fun/life-stats/minified/sun.svg" alt="Sun" class="absolute top-1/2 left-1/2 w-14 h-14 transform -translate-x-1/2 -translate-y-1/2">
+                    <img id="earthmid" src="https://neal.fun/life-stats/minified/world.svg" alt="Earth" class="absolute left-1/2 w-8 h-8 transform -translate-x-1/2 origin-center animate-orbit" style="transform-origin: 50% 96px">
+                </div>
+            </div>
+            
+            <!-- Moon Orbit -->
+            <div id="img14" class="image suncontainer hidden w-full h-full bg-black">
+                <div class="suntravel relative rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48">
+                    <img id="sunmid" src="https://neal.fun/life-stats/minified/world.svg" alt="Earth" class="absolute top-1/2 left-1/2 w-14 h-14 transform -translate-x-1/2 -translate-y-1/2">
+                    <img id="earthmid" src="https://neal.fun/life-stats/minified/moon.svg" alt="Moon" class="absolute left-1/2 w-8 h-8 transform -translate-x-1/2 origin-center animate-orbit" style="transform-origin: 50% 96px">
+                </div>
+            </div>
+            
+            <!-- More Lottie Animations -->
+            <iframe id="img15" class="image hidden" src="https://lottie.host/embed/319992a3-f568-4ae6-92a5-c6f1dd0961b5/vaEc80e5aZ.json"></iframe>
+            <iframe id="img16" class="image hidden" src="https://lottie.host/embed/87ed780b-ef5c-47e0-8417-7039be79bc16/yXVHVvQuPJ.json"></iframe>
+            <iframe id="img17" class="image hidden" src="https://lottie.host/embed/ebd93ecc-b8f7-45a1-bd26-d2fb07ba2bec/khcTbBze50.json"></iframe>
+            <iframe id="img18" class="image hidden" src="https://lottie.host/embed/5724dc31-98b6-43b6-be91-5880080f805c/pfDbx87YsN.json"></iframe>
+            
+            <!-- Creator Image -->
+            <div id="img19" class="image ranjan hidden">
+                <img src="./images/ranjan.jpg" alt="Ranjan" class="w-full h-72 object-cover rounded-lg">
+            </div>
+        </div>
+
+        <!-- Text Content -->
+        <div id="lines" class="lines w-11/12 max-w-2xl pt-60 pb-20 flex flex-col gap-32 text-start">
+            <p data-image="img1" class="text font-hind text-xl md:text-2xl text-gray-300 dark:text-gray-600 transition-colors duration-300">
+                आपके जन्म के बाद से <span data-y></span> साल, <span data-tl-days></span> दिन <span data-m></span> महीने बीत चुके हैं इन वर्षों में कई कहानियाँ लिखी जा चुकी हैं, दुनिया बदल गई है, और आप भी
+            </p>
+            <p data-image="img2" class="text font-hind text-xl md:text-2xl text-gray-300 dark:text-gray-600 transition-colors duration-300">जब से आपका जन्म हुआ है..</p>
+            <p data-image="img3" class="text font-hind text-xl md:text-2xl text-gray-300 dark:text-gray-600 transition-colors duration-300">
+                आपके दिल ने अब तक करीब <span data-heart-beat></span> बार धड़कते हुए <span data-blood-pump></span> लीटर रक्त पंप किया है...
+            </p>
+            <p data-image="img4" class="text font-hind text-xl md:text-2xl text-gray-300 dark:text-gray-600 transition-colors duration-300">
+                आपने लगभग <span data-breath></span> साँसें ली हैं..
+            </p>
+            <p data-image="img5" class="text font-hind text-xl md:text-2xl text-gray-300 dark:text-gray-600 transition-colors duration-300">
+                आपने लगभग <span data-blink></span> बार पलकें झपकाई हैं...
+            </p>
+            <p data-image="img6" class="text font-hind text-xl md:text-2xl text-gray-300 dark:text-gray-600 transition-colors duration-300">
+                आपने अपने जीवन के <span data-sleep></span> दिन सोकर बिताए हैं...
+            </p>
+            <p data-image="img7" class="text font-hind text-xl md:text-2xl text-gray-300 dark:text-gray-600 transition-colors duration-300">
+                आपके रक्त ने लगभग <span data-travel></span> मील की यात्रा की है...
+            </p>
+            <p data-image="img8" class="text font-hind text-xl md:text-2xl text-gray-300 dark:text-gray-600 transition-colors duration-300">
+                आपका मुँह हर दिन लगभग एक लीटर लार बनाता है! ज़रा सोचिए, अब तक आप <span data-saliva> </span> लीटर लार का उत्पादन कर चुके हैं...
+            </p>
+            <p data-image="img9" class="text font-hind text-xl md:text-2xl text-gray-300 dark:text-gray-600 transition-colors duration-300">आपने अपने जीवनकाल में लगभग <span data-skin></span> किलोग्राम त्वचा खो दी है..</p>
+            <p data-image="img10" class="text font-hind text-xl md:text-2xl text-gray-300 dark:text-gray-600 transition-colors duration-300">आपने अब तक <span data-urine></span> लीटर पेशाब किया है! सोचिए, ये इतनी मात्रा है कि टैंकर ट्रकों को भरने के लिए काफी है! आपका शरीर वाकई में एक कमाल की मशीन है...</p>
+            <p data-image="img11" class="text font-hind text-xl md:text-2xl text-gray-300 dark:text-gray-600 transition-colors duration-300">आप अकेले नहीं बदले हैं! दुनिया भी अब वैसी नहीं रही, यह एक पूरी तरह से नई जगह बन चुकी है...</p>
+            <p data-image="img12" class="text font-hind text-xl md:text-2xl text-gray-300 dark:text-gray-600 transition-colors duration-300">जब आप इस दुनिया में आए थे, तब की तुलना में अब वातावरण में <span data-co2></span>% अधिक CO2 घुल चुकी है,यह धरती की बदलती सांसों का संकेत है.. </p>
+            <p data-image="img13" class="text font-hind text-xl md:text-2xl text-gray-300 dark:text-gray-600 transition-colors duration-300">आपने सूर्य के चारों ओर <span data-sunTravel></span> किमी की यात्रा की है... </p>
+            <p data-image="img14" class="text font-hind text-xl md:text-2xl text-gray-300 dark:text-gray-600 transition-colors duration-300">चंद्रमा ने आपके जीवनकाल में <span data-moonOrbit></span> बार आपकी परिक्रमा की है.. </p>
+            <p data-image="img15" class="text font-hind text-xl md:text-2xl text-gray-300 dark:text-gray-600 transition-colors duration-300">चंद्रमा धीरे-धीरे हमसे दूर खिसक रहा है। जब आप इस दुनिया में आए थे, तब से वह <span data-moonaway></span> सेंटीमीटर और दूर हो चुका है...</p>
+            <p data-image="img16" class="text font-hind text-xl md:text-2xl text-gray-300 dark:text-gray-600 transition-colors duration-300"> मोमबत्तियों को फिर से जलाने का समय लगभग <span data-bday></span>दिन दूर है, इससे पहले हर एक क्षण का आनंद लें...</p>
+            <p data-image="img17" class="text font-hind text-xl md:text-2xl text-gray-300 dark:text-gray-600 transition-colors duration-300"> और आपको अभी भी एक लंबा रास्ता तय करना है...</p>
+            <p data-image="img18" class="text font-hind text-xl md:text-2xl text-gray-300 dark:text-gray-600 transition-colors duration-300">कौन जानता है कि आपके जीवनकाल में और क्या होगा?</p>
+            <p data-image="img19" class="text font-hind text-xl md:text-2xl text-gray-300 dark:text-gray-600 transition-colors duration-300"> 
+                Made With❤️ by Ranjan
+                <br>
+                <a onclick="restart()" href="#" class="text-primary hover:underline">Restart</a>
+            </p>
+        </div>
+    </div>
+
+ <script src="script.js"></script>
+</body>
+</html>
